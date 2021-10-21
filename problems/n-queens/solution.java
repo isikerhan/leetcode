@@ -26,7 +26,7 @@ class Solution {
     public boolean canBeAttacked(int row, int col, List<Integer> queens, int n) {
         
         for (int i = 0; i < queens.size(); i++) {
-            if (queens.get(i) == col || queens.size() - i == Math.abs(col - queens.get(i)))
+            if (queens.get(i) == col || i - queens.get(i) == row - col || i + queens.get(i) == row + col)
                 return true;
         }
         
@@ -36,10 +36,7 @@ class Solution {
     public List<String> queensToBoard(List<Integer> queens, int n) {
         List<String> board = new ArrayList<>(queens.size());
         for (int queen : queens) {
-            char[] chars = new char[n];
-            Arrays.fill(chars, '.');
-            chars[queen] = 'Q';
-            board.add(new String(chars));
+            board.add(".".repeat(queen) + "Q" + ".".repeat(n - queen - 1));
         }
         return board;
     }
