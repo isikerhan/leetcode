@@ -14,25 +14,23 @@ class Solution {
         ListNode head = null;
         ListNode prev = null;
         int k = 0;
-        
-        while(l1 != null || l2 != null) {
-            int sum = (l1 != null ? l1.val : 0) + (l2 != null ? l2.val : 0) + k;
+        while (l1 != null || l2 != null) {
+            int i1 = l1 == null ? 0 : l1.val;
+            int i2 = l2 == null ? 0 : l2.val;
+            int sum = i1 + i2 + k;
             k = sum / 10;
             ListNode node = new ListNode(sum % 10);
             if (prev != null)
                 prev.next = node;
-            if (head == null)
-                head = node;
+            else head = node;
             prev = node;
             l1 = l1 != null ? l1.next : null;
-            l2 = l2 != null ? l2.next: null;
+            l2 = l2 != null ? l2.next : null;
         }
         
-        if (k > 0) {
+        if (k > 0)
             prev.next = new ListNode(k);
-        }
         
         return head;
-        
     }
 }
