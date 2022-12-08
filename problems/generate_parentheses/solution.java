@@ -1,28 +1,29 @@
 class Solution {
     public List<String> generateParenthesis(int n) {
-        List<String> result = new LinkedList<>();
-        generate(result, new StringBuilder(), n, 0, n * 2);
-        return result;
+        // Create a list to store the combinations
+        List<String> combinations = new ArrayList<>();
+
+        // Generate the combinations recursively
+        generateParentheses(n, n, "", combinations);
+
+        return combinations;
     }
-    
-    public void generate(List<String> result, StringBuilder current, int remainingOpen, int remainingClose, int maxLen) {
-        if (current.length() == maxLen) {
-            result.add(current.toString());
+
+    public void generateParentheses(int left, int right, String current, List<String> combinations) {
+        // If there are no more left and right parentheses to use, add the current combination to the list
+        if (left == 0 && right == 0) {
+            combinations.add(current);
             return;
         }
-        
-        if (remainingOpen > 0) {
-            int lenBefore = current.length();
-            current.append('(');
-            generate(result, current, remainingOpen - 1, remainingClose + 1, maxLen);
-            current.setLength(lenBefore);
+
+        // If there are more left parentheses to use, add one to the current combination
+        if (left > 0) {
+            generateParentheses(left - 1, right, current + "(", combinations);
         }
-        
-        if (remainingClose > 0) {
-            int lenBefore = current.length();
-            current.append(')');
-            generate(result, current, remainingOpen, remainingClose - 1, maxLen);
-            current.setLength(lenBefore);
+
+        // If there are more right parentheses to use, add one to the current combination
+        if (right > 0 && right > left) {
+            generateParentheses(left, right - 1, current + ")", combinations);
         }
     }
 }
